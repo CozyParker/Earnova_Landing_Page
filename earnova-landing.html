@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Earnova — Learn What Fits Your Mind</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="icon" href="Favicon_changed1.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0f0e0d;
+    --cream: #f5f0e8;
+    --warm: #f0e6d0;
+    --amber: #c9773a;
+    --amber-light: #e8935a;
+    --muted: #7a7062;
+    --card: #fffdf8;
+    --border: #e0d8c8;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.4rem 5vw;
+    background: rgba(245, 240, 232, 0.88);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+
+  .logo span { color: var(--amber); }
+
+  nav a {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: var(--amber); }
+
+  .nav-cta {
+    background: var(--ink);
+    color: var(--cream) !important;
+    padding: 0.6rem 1.4rem;
+    border-radius: 2px;
+    letter-spacing: 0.06em;
+    transition: background 0.2s !important;
+  }
+
+  .nav-cta:hover { background: var(--amber) !important; color: white !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 5vw 4rem;
+    gap: 4rem;
+    position: relative;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 45%;
+    height: 100%;
+    background: var(--warm);
+    z-index: 0;
+  }
+
+  .hero-text { position: relative; z-index: 1; }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .eyebrow::before {
+    content: '';
+    display: block;
+    width: 2rem;
+    height: 1px;
+    background: var(--amber);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    font-weight: 900;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.6rem;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--amber);
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 38ch;
+    margin-bottom: 2.6rem;
+    line-height: 1.7;
+  }
+
+  .cta-group {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 0.9rem 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.25s, transform 0.15s;
+  }
+
+  .btn-primary:hover {
+    background: var(--amber);
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .btn-ghost:hover { color: var(--ink); border-color: var(--ink); }
+
+  /* HERO VISUAL */
+  .hero-visual {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .archetype-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 1.4rem 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+    animation: floatCard 4s ease-in-out infinite;
+  }
+
+  .archetype-card:nth-child(2) { animation-delay: 0.6s; margin-left: 1.5rem; }
+  .archetype-card:nth-child(3) { animation-delay: 1.2s; }
+
+  @keyframes floatCard {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+
+  .arch-icon {
+    width: 2.8rem;
+    height: 2.8rem;
+    background: var(--warm);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .arch-label {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1rem;
+  }
+
+  .arch-desc {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 0.15rem;
+  }
+
+  .arch-match {
+    margin-left: auto;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--amber);
+    white-space: nowrap;
+  }
+
+  /* SECTION SHARED */
+  section { padding: 6rem 5vw; }
+
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.2rem;
+  }
+
+  /* PROBLEM */
+  .problem {
+    background: var(--ink);
+    color: var(--cream);
+  }
+
+  .problem .section-label { color: var(--amber-light); }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    margin-top: 3rem;
+  }
+
+  .problem-text .section-title { color: var(--cream); }
+
+  .problem-text p {
+    color: #b0a898;
+    font-size: 1rem;
+    max-width: 42ch;
+    line-height: 1.75;
+  }
+
+  .stat-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .stat {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 1.8rem 1.4rem;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.6rem;
+    font-weight: 900;
+    color: var(--amber-light);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+
+  .stat-desc {
+    font-size: 0.82rem;
+    color: #887f74;
+    line-height: 1.5;
+  }
+
+  /* HOW IT WORKS */
+  .how { background: var(--warm); }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3.5rem;
+    position: relative;
+  }
+
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 2.2rem;
+    left: calc(33.33% - 1rem);
+    right: calc(33.33% - 1rem);
+    height: 1px;
+    background: var(--border);
+  }
+
+  .step { position: relative; }
+
+  .step-num {
+    width: 2.6rem;
+    height: 2.6rem;
+    border: 1px solid var(--border);
+    background: var(--card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 1.4rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .step p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
+
+  /* WHY EARNOVA */
+  .why { background: var(--cream); }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .why-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+
+  .why-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.07);
+  }
+
+  .why-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .why-card p { font-size: 0.87rem; color: var(--muted); line-height: 1.7; }
+
+  .why-marker {
+    width: 1.6rem;
+    height: 2px;
+    background: var(--amber);
+    margin-bottom: 1rem;
+  }
+
+  /* CTA SECTION */
+  .cta-section {
+    background: var(--warm);
+    text-align: center;
+    padding: 7rem 5vw;
+  }
+
+  .cta-section .section-label { color: var(--amber); }
+
+  .cta-section .section-title {
+    color: var(--ink);
+    max-width: 16ch;
+    margin: 0 auto 1.2rem;
+  }
+
+  .cta-section p {
+    color: var(--muted);
+    max-width: 44ch;
+    margin: 0 auto 2.4rem;
+    font-size: 0.97rem;
+  }
+
+  /* TALLY FORM */
+  .tally-wrapper {
+    max-width: 520px;
+    margin: 0 auto;
+    background: transparent;
+    overflow: hidden;
+    padding: 0.25rem 0.5rem;
+  }
+
+  /* FOOTER */
+  footer {
+    background: #0a0908;
+    color: #5a5248;
+    padding: 2rem 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.8rem;
+  }
+
+  footer .logo { color: var(--cream); font-size: 1.1rem; }
+
+  /* ANIMATIONS */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; padding-top: 7rem; }
+    .hero::before { display: none; }
+    .hero-visual { display: none; }
+    .problem-grid, .steps, .why-grid { grid-template-columns: 1fr; }
+    .stat-block { grid-template-columns: 1fr 1fr; }
+    .steps::before { display: none; }
+    nav .nav-links { display: none; }
+    footer { flex-direction: column; gap: 0.6rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">earn<span>ova</span></div>
+  <div class="nav-links" style="display:flex;gap:2rem;">
+    <a href="#how">How it works</a>
+    <a href="#why">Why Earnova</a>
+  </div>
+  <a href="#waitlist" class="nav-cta">Get Early Access</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="eyebrow">Personalised Learning System</div>
+    <h1>Stop guessing.<br>Learn what fits<br><em>your mind.</em></h1>
+    <p class="hero-sub">Earnova maps how you think, what motivates you, and when you learn best — then builds a precise skill path around it. No more paralysis. No more abandoned courses.</p>
+    <div class="cta-group">
+      <a href="#waitlist" class="btn-primary">Take the 12-min Assessment</a>
+      <a href="#how" class="btn-ghost">See how it works</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="archetype-card">
+      <div class="arch-icon">🔭</div>
+      <div>
+        <div class="arch-label">The Systems Builder</div>
+        <div class="arch-desc">Structured paths · Deep focus · Long sessions</div>
+      </div>
+      <div class="arch-match">94% match</div>
+    </div>
+    <div class="archetype-card">
+      <div class="arch-icon">⚡</div>
+      <div>
+        <div class="arch-label">The Fast Synthesiser</div>
+        <div class="arch-desc">Rapid cycles · Concepts first · Cross-domain</div>
+      </div>
+      <div class="arch-match">81% match</div>
+    </div>
+    <div class="archetype-card">
+      <div class="arch-icon">🧭</div>
+      <div>
+        <div class="arch-label">The Deliberate Practitioner</div>
+        <div class="arch-desc">Practice loops · Applied learning · Milestones</div>
+      </div>
+      <div class="arch-match">77% match</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="problem-grid">
+    <div class="problem-text">
+      <div class="section-label">The Problem</div>
+      <h2 class="section-title">200,000 courses. Zero direction.</h2>
+      <p>The internet gave young professionals unlimited access to learning. It gave them no system to navigate it. The result isn't ignorance — it's paralysis. Motivated people quit not because they stop caring, but because no one told them where to start.</p>
+    </div>
+    <div class="stat-block">
+      <div class="stat">
+        <div class="stat-num">7/10</div>
+        <div class="stat-desc">Professionals abandon online courses before completion</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">200K+</div>
+        <div class="stat-desc">Courses available across major platforms — with zero psychometric filtering</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3–5×</div>
+        <div class="stat-desc">Per year the average professional tries and fails to self-direct their learning</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">0</div>
+        <div class="stat-desc">Platforms that ask how your mind works before recommending</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="section-label">How It Works</div>
+  <h2 class="section-title">Three steps to a path built for you</h2>
+  <div class="steps">
+    <div class="step fade-up">
+      <div class="step-num">1</div>
+      <h3>Complete the Assessment</h3>
+      <p>A 12-minute cognitive and motivational profile. Not a personality quiz — a structured map of how you absorb information, what conditions drive your focus, and what derails your progress.</p>
+    </div>
+    <div class="step fade-up">
+      <div class="step-num">2</div>
+      <h3>Receive Your Archetype</h3>
+      <p>You are matched to one of 8 learning archetypes. Your archetype determines content format, session length, skill sequencing, and the order of what to tackle first.</p>
+    </div>
+    <div class="step fade-up">
+      <div class="step-num">3</div>
+      <h3>Follow Your Path</h3>
+      <p>A curated sequence of 3–5 skills, ordered for your brain, with daily sessions adapted to your peak hours and retention patterns. You learn. You finish. You move forward.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY EARNOVA -->
+<section class="why" id="why">
+  <div class="section-label">Why Earnova</div>
+  <h2 class="section-title">Built different from the start</h2>
+  <div class="why-grid">
+    <div class="why-card fade-up">
+      <div class="why-marker"></div>
+      <h3>Person first, content second</h3>
+      <p>Every other platform begins with its catalog. Earnova begins with you. The assessment runs before any recommendation is made — making it the only system that filters through a cognitive lens.</p>
+    </div>
+    <div class="why-card fade-up">
+      <div class="why-marker"></div>
+      <h3>Sequence, not suggestion</h3>
+      <p>Earnova doesn't suggest what to learn. It tells you what to learn next, in what order, and why — removing the paralysis that kills momentum before the first lesson starts.</p>
+    </div>
+    <div class="why-card fade-up">
+      <div class="why-marker"></div>
+      <h3>Built for career transition</h3>
+      <p>Designed specifically for young professionals (22–35) who are self-directing their growth with no structured support, no L&D budget, and the most to gain from getting it right.</p>
+    </div>
+    <div class="why-card fade-up">
+      <div class="why-marker"></div>
+      <h3>Adaptive feedback loop</h3>
+      <p>Earnova tracks your actual progress and refines your path over time. No static plan — a system that learns your patterns as you do.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WAITLIST CTA -->
+<section class="cta-section" id="waitlist">
+  <div class="section-label">Early Access</div>
+  <h2 class="section-title">Know exactly where to start.</h2>
+<div class="tally-wrapper">
+    <iframe data-tally-src="https://tally.so/embed/vGNYvQ?hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="300" frameborder="0" marginheight="0" marginwidth="0" title="Earnova Early Access"></iframe>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">earn<span style="color:var(--amber)">ova</span></div>
+  <span>© 2025 Earnova · PES University CIE</span>
+  <span>Learning, finally personal.</span>
+</footer>
+
+<script>
+  // Scroll fade-up
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 120);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Tally embed
+  var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}
+</script>
+</body>
+</html>
